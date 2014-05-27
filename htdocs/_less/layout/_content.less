@@ -1,0 +1,35 @@
+/* ==========================================================================
+   Content
+   ========================================================================== */
+.content {
+  position: relative;
+}
+
+/* Main content
+   ========================================================================== */
+.main-content {
+  position: relative;
+  max-width: 768px;
+  min-width: 320px;
+  min-height: 100%;
+  margin: 0 auto -121px;
+  padding: 34px 40px 121px;
+  background-color: #fff;
+
+  &.is-loading::before {
+    content: '';
+    position: absolute;
+    z-index: 100;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #fff;
+  }
+
+  @media @sizeSP {
+    min-height: 0;
+    margin-bottom: 0;
+    padding: 25px 20px 60px;
+  }
+}

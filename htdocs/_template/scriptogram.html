@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="ja-JP" class="no-js">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="description" content="ふるえれの日記のようなものリターンズ">
+    <meta name="author" content="{{author}}">
+    <link rel="stylesheet" href="//storage.fluere.net/css/vendor/font-awesome.css">
+    <link rel="stylesheet" href="//storage.fluere.net/css/all.min.css">
+    <link rel="alternate" href="/feed" type="application/rss+xml">
+    <link rel="shortcut icon" href="//storage.fluere.net/favicon.ico">
+    <title>{{#is_post}}{{#posts}}{{title}}｜{{/posts}}{{/is_post}}{{#is_archive}}archive｜{{/is_archive}}{{blog_title}}</title>
+    <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga'); ga('create', 'UA-51200943-1', 'fluere.net');</script>
+  </head>
+  <body id="page"{{#is_index}} class="is-index"{{/is_index}}>
+    <div class="background-blurred"></div>
+    <div class="background"></div>
+
+    <header class="page-header" role="banner">
+      <h1><a href="/"><span class="name">fluere</span><br><i>"Je suis en amour avec le voleur de fraise."</i></a></h1>
+      <p class="goto-main"><a href="#main-content"><i class="fa fa-angle-double-down"></i></a></p>
+    <!-- /.page-header -->
+    </header>
+
+    <div class="content">
+      <main class="main-content" id="main-content" role="main">
+        {{^is_post}}
+        {{^is_page}}
+        <section class="archive">
+          <h1 class="archive__title">{{#is_index}}recently{{/is_index}}{{#is_archive}}archive{{/is_archive}}</h1>
+          <div class="archive__list">
+            {{#posts}}
+            <section class="archive__item">
+              <a href="{{permalink}}">
+                <h1 class="archive__item__title">{{title}}</h1>
+                {{#date}}<span class="archive__item__pubdate">{{prettydate}}</span>{{/date}}
+                {{#excerpt}}<p class="archive__item__summary">{{excerpt}}</p>{{/excerpt}}
+              </a>
+            </section>
+            {{/posts}}
+          </div>
+        </section>
+        {{/is_page}}
+        {{/is_post}}
+
+        {{#is_post}}
+        {{#posts}}
+        <article class="entry" itemscope itemtype="http://schema.org/BlogPosting" itemref="author">
+          <link href="{{permalink}}" itemprop="url">
+          <header class="entry__header">
+            <h1 class="entry__title" itemprop="name">{{title}}</h1>
+            {{#date}}<span class="entry__pubdate" itemprop="datePublished">{{prettydate}}</span>{{/date}}
+            {{#if_tags}}
+            <ul class="entry__tags">
+              {{#tags}}<li><a href="/tag/{{name}}" rel="tag">{{name}}</a></li>{{/tags}}
+            </ul>
+            {{/if_tags}}
+          </header>
+          <div class="entry__body" itemprop="articleBody">
+            {{content}}
+          </div>
+          <div class="entry__comment">
+            <div id="disqus_thread"></div>
+          </div>
+        </article>
+        {{/posts}}
+        {{/is_post}}
+
+        {{#is_page}}
+        {{#posts}}
+        <article class="entry" itemscope itemtype="http://schema.org/BlogPosting" itemref="author">
+          <link href="{{permalink}}" itemprop="url">
+          <header class="entry__header">
+            <h1 class="entry__title" itemprop="name">{{title}}</h1>
+          </header>
+          <div class="entry__body" itemprop="articleBody">
+            {{content}}
+          </div>
+        </article>
+        {{/posts}}
+        {{/is_page}}
+
+        {{#is_index}}
+        <div class="pagination">
+          {{pagination}}
+        </div>
+        {{/is_index}}
+        {{^is_index}}
+        <div class="return-home">
+          <p><a href="/"><i class="fa fa-angle-left"></i>index</a></p>
+        </div>
+        {{/is_index}}
+      </main>
+
+      <aside class="sub-content" role="complementary">
+        <section class="soundtracks" id="soundtracks">
+          <p class="soundtracks__handle"><i class="fa fa-headphones"></i></p>
+          <div class="soundtracks__overlay">
+            <div class="soundtracks__content">
+              <iframe src="//storage.fluere.net/html/soundtracks_embeded_holder.html" class="soundtracks__embeded"></iframe>
+              <ul class="soundtracks__index"></ul>
+            </div>
+          </div>
+        </section>
+      </aside>
+    <!-- /.content -->
+    </div>
+
+    <footer class="page-footer" role="contentinfo">
+      <p class="goto-pagetop"><a href="#page"><i class="fa fa-angle-double-up"></i></a></p>
+      <div class="inner">
+        <nav class="global-nav" role="navigation">
+          <ul>
+            <li><a href="/">home</a></li><!--
+            --><li><a href="/about">about</a></li><!--
+            --><li><a href="/archive">archive</a></li><!--
+            --><li><a href="https://twitter.com/fluere" target="_blank">twitter</a></li><!--
+            --><li><a href="https://github.com/fluere" target="_blank">GitHub</a></li><!--
+            --><li><a href="https://8tracks.com/fluere" target="_blank">8tracks</a></li>
+          </ul>
+        </nav>
+        <p class="author" id="author" itemscope itemtype="http://schema.org/Person">Created by <a href="/about" itemprop="url" rel="author"><span itemprop="name">{{author}}</span></a>.</p>
+      </div>
+    <!-- /.page-footer -->
+    </footer>
+
+    <script src="//storage.fluere.net/js/vendor/libs.js"></script>
+    <script src="//storage.fluere.net/js/all.min.js"></script>
+  </body>
+</html>

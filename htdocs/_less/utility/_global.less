@@ -1,0 +1,41 @@
+// ==========================================================================
+// Variable
+// ==========================================================================
+
+// Size
+@sizeSP: ~"screen and (max-width: 768px)";
+@sizePC: ~"screen and (min-width: 769px)";
+
+// Color
+@baseColor: #666;
+@thinColor: #999;
+
+@linkColor: #4db4e4;
+@linkVisitedColor: #ba96c4;
+
+@subColor: #ccc;
+@subHoverColor: #aaa;
+
+// ==========================================================================
+// Mixin
+// ==========================================================================
+.clearfix() {
+	zoom: 1;
+
+	&:after {
+		content: "";
+		display: block;
+		clear: both;
+	}
+}
+
+.image-replace() {
+  white-space:nowrap;
+  text-indent: 100%;
+  overflow: hidden;
+}
+
+.fa() {
+  display: inline-block;
+  font: normal normal 1em/1 FontAwesome;
+}

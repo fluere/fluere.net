@@ -1,0 +1,102 @@
+/* ==========================================================================
+   Page footer
+   ========================================================================== */
+.page-footer {
+  position: relative;
+  width: 768px;
+  margin: 70px auto 0;
+  padding: 10px 0 0;
+  border-top: 1px solid #eaeaea;
+  background-color: #fff;
+
+  > .inner {
+    max-width: 768px;
+    min-width: 320px;
+    margin: 0 auto;
+    padding: 0 34px;
+  }
+
+  .goto-pagetop {
+    position: absolute;
+    left: 50%;
+    top: -35px;
+    margin-left: -13px;
+    line-height: .6;
+    font-size: 4rem;
+    text-align: center;
+    opacity: .7;
+
+    a {
+      color: @subColor;
+    }
+
+    i {
+      line-height: .6;
+      cursor: pointer;
+      transition: all .2s;
+
+      &:hover {
+        color: @subHoverColor;
+        transform: scale(1.2);
+      }
+    }
+  }
+
+  .global-nav li,
+  .author {
+    font-size: 1.4rem;
+    font-family: 'Roboto Slab Regular', serif;
+
+    a {
+      color: @subColor;
+      text-decoration: none;
+      transition: color .2s, border .2s;
+
+      &:hover {
+        border-bottom: 1px dotted #ddd;
+        color: @subHoverColor;
+      }
+    }
+  }
+
+  .global-nav {
+    float: left;
+
+    li {
+      display: inline-block;
+
+      &::before {
+        content: '\b7';
+        display: inline-block;
+        margin: 0 .3rem;
+        color: #ddd;
+      }
+
+      &:first-child::before {
+        content: '';
+        margin: 0;
+      }
+    }
+  }
+
+  .author {
+    float: right;
+    color: @subColor;
+    font-style: italic;
+  }
+
+  @media @sizeSP {
+    width: auto;
+    margin-top: 0;
+
+    > .inner {
+      padding: 0 20px 15px;
+    }
+
+    .global-nav,
+    .author {
+      float: none;
+      text-align: center;
+    }
+  }
+}

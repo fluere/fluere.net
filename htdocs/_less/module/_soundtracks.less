@@ -1,0 +1,120 @@
+/* ==========================================================================
+   Sound tracks module
+   ========================================================================== */
+.soundtracks {
+  .mobile &,
+  .no-js & {
+    display: none;
+  }
+
+  @media @sizeSP {
+    display: none;
+  }
+}
+
+.soundtracks__handle {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  width: 42px;
+  height: 42px;
+  margin: 0 auto;
+  border: 1px solid #dfcde3;
+  border-radius: 50%;
+  line-height: 42px;
+  color: #dfcde3;
+  background: rgba(255,255,255,.3);
+  text-align: center;
+  font-size: 27px;
+  cursor: pointer;
+  transition: color .2s, background-color .2s;
+
+  &:hover {
+    color: #fff;
+    background-color: #dfcde3;
+  }
+
+  i {
+    line-height: 42px;
+  }
+}
+
+.soundtracks__overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10000;
+  background-color: rgba(0,0,0,.5);
+}
+
+.soundtracks__content {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 700px;
+  height: 340px;
+  margin: -170px 0 0 -350px !important;
+  padding: 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,.3);
+}
+
+.soundtracks__index {
+  float: left;
+  overflow: auto;
+  width: 340px;
+  height: 100%;
+  padding-right: 10px;
+
+  li {
+    line-height: 1.2;
+    font-size: 1.2rem;
+    letter-spacing: 1px;
+  }
+
+  a {
+    position: relative;
+    display: block;
+    padding: 8px 10px;
+    color: inherit;
+    text-decoration: none;
+    transition: background-color .2s;
+
+    .fa {
+      position: absolute;
+      top: 50%;
+      right: 5px;
+      margin-top: -8px;
+      color: #dfdfdf;
+      font-size: 15px;
+      opacity: 0;
+      transition: opacity .2s;
+    }
+
+    &.is-current,
+    &:hover {
+      background-color: #f5f5f5;
+
+      .fa {
+        opacity: 1;
+      }
+    }
+  }
+
+  .tracks-count {
+    margin-left: 5px;
+    color: @subColor;
+    font-size: 1rem;
+    font-style: italic;
+  }
+}
+
+.soundtracks__embeded {
+  float: right;
+  overflow: hidden;
+  width: 300px;
+  height: 300px;
+}

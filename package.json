@@ -1,0 +1,19 @@
+{
+  "name": "fluere.net",
+  "version": "1.0.0",
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-rename": "*",
+    "gulp-concat": "*",
+    "gulp-uglify": "*",
+    "gulp-jshint": "*",
+    "gulp-less": "*",
+    "gulp-autoprefixer": "*",
+    "gulp-csslint": "*",
+    "gulp-htmlhint": "*",
+    "gulp-livereload": "*",
+    "jshint-stylish": "*",
+    "gulp-plumber": "*",
+    "tiny-lr": "*"
+  }
+}

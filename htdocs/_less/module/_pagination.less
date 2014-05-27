@@ -1,0 +1,46 @@
+/* ==========================================================================
+   Pagination
+   ========================================================================== */
+.pagination {
+  margin-top: 40px;
+  line-height: 1;
+  text-align: center;
+
+  li {
+    display: inline-block;
+    vertical-align: top;
+    margin: 0 2px;
+  }
+
+  a {
+    display: inline-block;
+    vertical-align: top;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding-top: 1px;
+    border-radius: 50%;
+    line-height: 2.5rem;
+    color: @subColor;
+    text-decoration: none;
+    text-align: center;
+    transition: color .2s;
+
+    &:hover {
+      color: @subHoverColor;
+    }
+  }
+
+  .active a {
+    color: #fff;
+    background-color: #ddd;
+  }
+
+  .prev a,
+  .next a {
+    width: auto;
+  }
+
+  @media @sizeSP {
+    margin-top: 20px;
+  }
+}

@@ -1,0 +1,93 @@
+/* ==========================================================================
+   Background
+   ========================================================================== */
+.no-js {
+  background: url(/img/bg.jpg) no-repeat center bottom fixed;
+  background-size: cover;
+
+  .background,
+  .background-blurred {
+    display: none;
+  }
+
+  @media @sizeSP {
+    background: url(/img/bg_s.jpg) no-repeat center bottom fixed;
+    background-size: cover;
+  }
+}
+
+.js {
+  background: none;
+
+  .background-blurred,
+  .background {
+    content: '';
+    display: block;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .background-blurred {
+    z-index: -2;
+    background: url(/img/bg_blurred.jpg) no-repeat center bottom;
+    background-size: cover;
+    opacity: 0;
+  }
+
+  .background {
+    z-index: -1;
+    background: url(/img/bg.jpg) no-repeat center bottom;
+    background-size: cover;
+    opacity: 0;
+    filter: saturate(0%) brightness(150%);
+  }
+
+  @media screen and (max-width: 1600px) {
+    .background-blurred {
+      background-image: url(/img/bg_blurred_s.jpg);
+    }
+
+    .background {
+      background-image: url(/img/bg_s.jpg);
+    }
+  }
+
+  @media @sizeSP {
+    background: url(/img/bg_s.jpg) no-repeat center bottom;
+    background-size: cover;
+
+    .background-blurred,
+    .background {
+      display: none;
+    }
+  }
+}
+
+.js.is-ready {
+  .background-blurred {
+    opacity: 1;
+  }
+
+  .background {
+    opacity: 1;
+    animation: opening-background 3s;
+    animation-fill-mode: both;
+  }
+}
+
+.js.mobile {
+  background: url(/img/bg_s.jpg) no-repeat center bottom;
+  background-size: cover;
+
+  .background-blurred {
+    display: none !important;
+  }
+
+  .background {
+    opacity: 1 !important;
+    aniamtion: none !important;
+  }
+}
