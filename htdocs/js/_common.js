@@ -165,12 +165,12 @@
   var setUpTagPage = function() {
     var path = location.pathname.split('/');
 
-    if (path[0] !== 'tag' || path.length < 2) {
+    if (path[1] !== 'tag' || path.length < 3) {
       return;
     }
 
-    $('title').text($('html').text().replace(/^archive/, path[1]));
-    $('h1.archive__title').text(path[1]);
+    $('title').text($('title').text().replace(/^archive/, '#' + path[2]));
+    $('h1.archive__title').text('#' + path[2]);
   };
 
   /* DOMContentLoaded. */
