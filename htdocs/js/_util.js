@@ -72,4 +72,35 @@
     return this;
   };
 
+  /**
+   * Popup.
+   * @param {object} options
+   */
+  $.fn.popup = function(options) {
+    var o = $.extend({
+      width      : 600,
+      height     : 500,
+      menubar    : 'no',
+      toolbar    : 'no',
+      location   : 'no',
+      status     : 'no',
+      resizable  : 'no',
+      scrollbars : 'no'
+    }, options);
+    var popupOptions;
+
+    o.top = Math.floor((window.screen.height - o.height) / 2);
+    o.left = Math.floor((window.screen.width - o.width) / 2);
+    popupOptions = $.param(o).replace(/&/g,',');
+
+    this.filter('[href]').each(function() {
+      $(this).on('click', function() {
+        window.open($(this).attr('href'), '', popupOptions);
+        return false;
+      });
+    });
+
+    return this;
+  };
+
 }(window.jQuery));

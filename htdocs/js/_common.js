@@ -26,6 +26,7 @@
     setUpPjax();
     setUpCustomScroll();
     setUpBackground();
+    setUpLink('.page-header, .page-footer');
     pageLoadComplete();
   };
 
@@ -42,30 +43,20 @@
    */
   var pageLoadComplete = function() {
     /* Links */
-    $('a')
-      /* External link. */
-      .filter('[href^="http"]:not([href*="' + location.hostname + '"]):not([target])')
-        .attr('target', '_blank')
-      .end()
-      /* Smooth scroll */
-      .filter('[href^="#"]:not([href="#"]):not([rel="footnote"])')
-        .smoothScroll()
-      .end()
-      .filter('[rel="footnote"]')
-        .smoothScroll({ highlight: true });
+    setUpLink('#main-content');
+
+    /* Set up tag page. */
+    setUpTagPage();
 
     /* Gist embed. */
     if ($mainContent.find('code[data-gist-id]').length) {
       window.gistEmbed();
     }
 
-    /* Disqus */
-    if ($('#disqus_thread').length) {
-      $mainContent.append('<script src="//fluere.disqus.com/embed.js" async></script>');
+    /* Tracking pageview. */
+    if ('ga' in window) {
+      window.ga('send', 'pageview', window.location.pathname + window.location.search);
     }
-
-    /* Set up tag page. */
-    setUpTagPage();
 
     /* Show main content */
     $mainContent.filter('.is-loading')
@@ -78,19 +69,15 @@
             .delay(100 * (i + 1) + 100)
             .fadeTo(400, 1);
         });
-
-    /* Tracking pageview. */
-    if ('ga' in window) {
-      window.ga('send', 'pageview', window.location.pathname + window.location.search);
-    }
   };
 
   /**
    * Set up utility.
    */
   var setUpUtility = function() {
+    /* Keep Height. */
     $window
-      .on('load resize orientationchange scroll', function() {
+      .on('load resize' + (isMobile ? 'orientationchange scroll' : ''), function() {
         $header.css('minHeight', $window.height());
         $mainContent.css('minHeight', $window.height());
       })
@@ -157,6 +144,26 @@
         }
       })
       .trigger('scroll.swapbg');
+  };
+
+  /**
+   * Set up link.
+   */
+  var setUpLink = function(selector) {
+    $(selector).find('a')
+      /* External link. */
+      .filter('[href^="http"]:not([href*="' + location.hostname + '"]):not([target])')
+        .attr('target', '_blank')
+      .end()
+      /* Smooth scroll */
+      .filter('[href^="#"]:not([href="#"]):not([rel="footnote"])')
+        .smoothScroll()
+      .end()
+      .filter('[rel="footnote"]')
+        .smoothScroll({ highlight: true })
+      .end()
+      .filter('.popup')
+        .popup();
   };
 
   /**

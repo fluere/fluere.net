@@ -1,11 +1,26 @@
 <!DOCTYPE html>
-<html lang="ja-JP" class="no-js">
+<html lang="ja-JP" class="no-js" prefix="og: http://ogp.me/ns#">
   <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, minimal-ui">
     <meta name="format-detection" content="telephone=no">
     <meta name="description" content="ふるえれの日記のようなものリターンズ">
     <meta name="author" content="{{author}}">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:site" content="@fluere">
+    <meta name="twitter:creator" content="@fluere">
+    <meta name="twitter:domain" content="fluere.net">
+    {{#posts}}
+    <meta property="og:type" content="{{^is_post}}{{^is_page}}blog{{/is_page}}{{/is_post}}{{^is_index}}{{^is_archive}}article{{/is_archive}}{{/is_index}}">
+    <meta property="og:url" content="{{^is_post}}{{^is_page}}{{base_url}}/{{/is_page}}{{/is_post}}{{^is_index}}{{^is_archive}}{{permalink}}{{/is_archive}}{{/is_index}}">
+    <meta property="og:title" content="{{^is_post}}{{^is_page}}{{blog_title}}{{/is_page}}{{/is_post}}{{^is_index}}{{^is_archive}}{{title}}{{/is_archive}}{{/is_index}}">
+    <meta property="og:description" content="ふるえれの日記のようなものリターンズ">
+    {{^is_index}}{{^is_archive}}{{#excerpt}}
+    <meta property="og:description" content="{{excerpt}}">
+    {{/excerpt}}{{/is_archive}}{{/is_index}}
+    {{/posts}}
+    <meta property="og:site_name" content="{{blog_title}}">
+    <meta property="og:image" content="http://storage.fluere.net/img/ogimage.jpg">
     <link rel="stylesheet" href="//storage.fluere.net/css/vendor/font-awesome.css">
     <link rel="stylesheet" href="//storage.fluere.net/css/all.min.css">
     <link rel="alternate" href="/feed" type="application/rss+xml">
@@ -60,9 +75,12 @@
           <div class="entry__body" itemprop="articleBody">
             {{content}}
           </div>
-          <div class="entry__comment">
-            <div id="disqus_thread"></div>
-          </div>
+          <ul class="entry__share">
+            <li class="twitter"><a href="https://twitter.com/share?url={{permalink}}&amp;text={{title}}｜{{blog_title}}" target="_blank" title="この記事をツイートする" class="popup" rel="nofollow"><i class="fa fa-twitter"></i><span>Tweet</span></a></li><!--
+            --><li class="facebook"><a href="https://www.facebook.com/sharer/sharer.php?u={{permalink}}" target="_blank" title="この記事をFacebookでシェアする" class="popup" rel="nofollow"><i class="fa fa-facebook-square"></i><span>Share (facebook)</span></a></li><!--
+            --><li class="google-plus"><a href="https://plus.google.com/share?url={{permalink}}" target="_blank" title="この記事をGoogle+でシェアする" class="popup" rel="nofollow"><i class="fa fa-google-plus-square"></i><span>Share(Google+)</span></a></li><!--
+            --><li class="hatena-bookmark"><a href="http://b.hatena.ne.jp/add?url={{permalink}}&amp;title={{title}}｜{{blog_title}}" target="_blank" title="この記事をはてなブックマークに追加する" class="popup" rel="nofollow"><i class="fa fa-hatebu"></i><span>Add bookmark</span></a></li>
+          </ul>
         </article>
         {{/posts}}
         {{/is_post}}
