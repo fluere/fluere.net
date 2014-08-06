@@ -10,15 +10,29 @@
     <meta name="twitter:site" content="@fluere">
     <meta name="twitter:creator" content="@fluere">
     <meta name="twitter:domain" content="fluere.net">
-    {{#posts}}
-    <meta property="og:type" content="{{^is_post}}{{^is_page}}blog{{/is_page}}{{/is_post}}{{^is_index}}{{^is_archive}}article{{/is_archive}}{{/is_index}}">
-    <meta property="og:url" content="{{^is_post}}{{^is_page}}{{base_url}}/{{/is_page}}{{/is_post}}{{^is_index}}{{^is_archive}}{{permalink}}{{/is_archive}}{{/is_index}}">
-    <meta property="og:title" content="{{^is_post}}{{^is_page}}{{blog_title}}{{/is_page}}{{/is_post}}{{^is_index}}{{^is_archive}}{{title}}{{/is_archive}}{{/is_index}}">
+    {{^is_post}}
+    {{^is_page}}
+    <meta property="og:type" content="blog">
+    <meta property="og:url" content="{{base_url}}/">
+    <meta property="og:title" content="{{blog_title}}">
     <meta property="og:description" content="ふるえれの日記のようなものリターンズ">
-    {{^is_index}}{{^is_archive}}{{#excerpt}}
+    {{/is_page}}
+    {{/is_post}}
+    {{^is_index}}
+    {{^is_archive}}
+    {{#posts}}
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="{{permalink}}">
+    <meta property="og:title" content="{{title}}">
+    {{#excerpt}}
     <meta property="og:description" content="{{excerpt}}">
-    {{/excerpt}}{{/is_archive}}{{/is_index}}
+    {{/excerpt}}
+    {{^excerpt}}
+    <meta property="og:description" content="ふるえれの日記のようなものリターンズ">
+    {{/excerpt}}
     {{/posts}}
+    {{/is_archive}}
+    {{/is_index}}
     <meta property="og:site_name" content="{{blog_title}}">
     <meta property="og:image" content="http://storage.fluere.net/img/ogimage.jpg">
     <link rel="stylesheet" href="//storage.fluere.net/css/vendor/font-awesome.css">
