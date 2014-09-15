@@ -59,12 +59,15 @@
     }
 
     /* Show main content */
-    $mainContent
+    $mainContent.filter('.is-loading')
       .removeClass('is-loading')
-      .find('.archive__title, .archive__item, .entry__header, .entry__body>*, .entry__share, .pagination, .return-home')
-        .addClass('entry__object idle')
-        .one('inview', function() {
-          $(this).removeClass('idle');
+      .find('.archive__title, .archive__item, .entry__header, .entry__body>*, .entry__comment, .pagination, .return-home')
+        .fadeTo(0, 0)
+        .each(function(i) {
+          $(this)
+            .stop(true, true)
+            .delay(70 * (i + 1) + 100)
+            .fadeTo(300, 1);
         });
   };
 
