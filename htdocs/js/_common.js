@@ -11,7 +11,7 @@
   var $window = $(window)
     , $html = $('html')
     , $header = $('header.page-header')
-    , $mainContent = $('#main-content');
+    , $content = $('div.content');
 
   /**
    * For state management.
@@ -34,14 +34,18 @@
    * Page load start.
    */
   var pageLoadStart = function() {
-    $mainContent.addClass('is-loading');
-    window.scrollTo(0, $mainContent.offset().top);
+    $content.addClass('is-loading');
+    window.scrollTo(0, $header.outerHeight());
   };
 
   /**
    * Page load complete.
    */
   var pageLoadComplete = function() {
+    /* Keep height */
+    $('#main-content').css('minHeight', $window.height());
+    window.scrollTo(0, $header.outerHeight());
+
     /* Links */
     setUpLink('#main-content');
 
@@ -49,7 +53,7 @@
     setUpTagPage();
 
     /* Gist embed. */
-    if ($mainContent.find('code[data-gist-id]').length) {
+    if ($content.find('code[data-gist-id]').length) {
       window.gistEmbed();
     }
 
@@ -59,7 +63,7 @@
     }
 
     /* Show main content */
-    $mainContent.filter('.is-loading')
+    $content.filter('.is-loading')
       .removeClass('is-loading')
       .find('.archive__title, .archive__item, .entry__header, .entry__body>*, .entry__comment, .pagination, .return-home')
         .fadeTo(0, 0)
@@ -79,7 +83,6 @@
     $window
       .on('load resize' + (isMobile ? 'orientationchange scroll' : ''), function() {
         $header.css('minHeight', $window.height());
-        $mainContent.css('minHeight', $window.height());
       })
       .trigger('resize');
   };
@@ -98,12 +101,13 @@
       $.pjax({
         area: '#main-content',
         link: linkSelector,
-        load: { script: true },
-        callback: pageLoadComplete,
-        callbacks: { before: pageLoadStart },
         scrollTop: false,
         scrollLeft: false
       });
+
+      $(document)
+        .on('pjax:fetch', pageLoadStart)
+        .on('pjax:DOMContentLoaded', pageLoadComplete);
     }
   };
 
