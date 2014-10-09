@@ -7,7 +7,7 @@
     display: none;
   }
 
-  @media @sizeSP {
+  @media #{$sizeSP} {
     display: none;
   }
 }
@@ -106,7 +106,7 @@
 
   .tracks-count {
     margin-left: 5px;
-    color: @subColor;
+    color: $subColor;
     font-size: 1rem;
     font-style: italic;
   }

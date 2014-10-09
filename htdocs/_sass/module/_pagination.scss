@@ -20,13 +20,13 @@
     padding-top: 1px;
     border-radius: 50%;
     line-height: 2.5rem;
-    color: @subColor;
+    color: $subColor;
     text-decoration: none;
     text-align: center;
     transition: color .2s;
 
     &:hover {
-      color: @subHoverColor;
+      color: $subHoverColor;
     }
   }
 
@@ -40,7 +40,7 @@
     width: auto;
   }
 
-  @media @sizeSP {
+  @media #{$sizeSP} {
     margin-top: 20px;
   }
 }

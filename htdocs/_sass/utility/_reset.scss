@@ -161,5 +161,5 @@ sub {
 /* Clearfix
    ========================================================================== */
 header, footer, main, section, article, aside, nav {
-	.clearfix;
+	@include clearfix;
 }

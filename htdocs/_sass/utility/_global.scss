@@ -3,23 +3,22 @@
 // ==========================================================================
 
 // Size
-@sizeSP: ~"screen and (max-width: 768px)";
-@sizePC: ~"screen and (min-width: 769px)";
+$sizeSP: "screen and (max-width: 768px)";
 
 // Color
-@baseColor: #666;
-@thinColor: #999;
+$baseColor: #666;
+$thinColor: #999;
 
-@linkColor: #4db4e4;
-@linkVisitedColor: #ba96c4;
+$linkColor: #4db4e4;
+$linkVisitedColor: #ba96c4;
 
-@subColor: #ccc;
-@subHoverColor: #aaa;
+$subColor: #ccc;
+$subHoverColor: #aaa;
 
 // ==========================================================================
 // Mixin
 // ==========================================================================
-.clearfix() {
+@mixin clearfix {
 	zoom: 1;
 
 	&:after {
@@ -29,13 +28,13 @@
 	}
 }
 
-.image-replace() {
+@mixin image-replace {
   white-space:nowrap;
   text-indent: 100%;
   overflow: hidden;
 }
 
-.fa() {
+@mixin fa {
   display: inline-block;
   font: normal normal 1em/1 FontAwesome;
 }

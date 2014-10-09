@@ -8,7 +8,7 @@
     margin-top: -34px;
   }
 
-  @media @sizeSP {
+  @media #{$sizeSP} {
     margin: 0 -20px;
 
     &:first-child {
@@ -21,14 +21,14 @@
   padding: 15px 40px;
   line-height: 1.1;
   color: #fff;
-  background: @baseColor;
+  background: $baseColor;
   border-top: 1px solid #6c6c6c;
   border-bottom: 1px solid #5f5f5f;
   font-size: 2.4rem;
   font-weight: normal;
   font-family: 'HelveticaNeue-Light', 'Roboto Light', sans-serif;
 
-  @media @sizeSP {
+  @media #{$sizeSP} {
     padding-right: 20px;
     padding-left: 20px;
   }
@@ -56,7 +56,7 @@
     transition: background-color .3s;
 
     &::before {
-      .fa;
+      @include fa;
       content: '\f105';
       position: absolute;
       right: 15px;
@@ -76,7 +76,7 @@
     }
   }
 
-  @media @sizeSP {
+  @media #{$sizeSP} {
     > a {
       padding: 2rem 30px 1.8rem 20px;
 
@@ -102,16 +102,12 @@
 .archive__item__pubdate {
   display: block;
   padding-top: 5px;
-  color: @subColor;
+  color: $subColor;
   font-size: 1.4rem;
   font-family: 'Roboto Slab Light', serif;
-
-  li:first-child & {
-
-  }
 }
 
 .archive__item__summary {
-  margin-top: 0.8rem;
-  color: @baseColor;
+  margin-top: .8rem;
+  color: $baseColor;
 }

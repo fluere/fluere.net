@@ -5,8 +5,13 @@
 /* Background
    ========================================================================== */
 @keyframes opening-background {
-  0%   { filter: saturate(0%) brightness(150%); }
-  100% { filter: none; }
+  0%   {
+    filter: saturate(0%) brightness(150%);
+  }
+
+  100% {
+    filter: none;
+  }
 }
 
 /* Header

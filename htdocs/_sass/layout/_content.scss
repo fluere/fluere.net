@@ -27,7 +27,7 @@
     background: #fff;
   }
 
-  @media @sizeSP {
+  @media #{$sizeSP} {
     min-height: 0;
     margin-bottom: 0;
     padding: 25px 20px 60px;

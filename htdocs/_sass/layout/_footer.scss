@@ -27,7 +27,7 @@
     opacity: .7;
 
     a {
-      color: @subColor;
+      color: $subColor;
     }
 
     i {
@@ -36,7 +36,7 @@
       transition: all .2s;
 
       &:hover {
-        color: @subHoverColor;
+        color: $subHoverColor;
         transform: scale(1.2);
       }
     }
@@ -48,13 +48,13 @@
     font-family: 'Roboto Slab Regular', serif;
 
     a {
-      color: @subColor;
+      color: $subColor;
       text-decoration: none;
       transition: color .2s, border .2s;
 
       &:hover {
         border-bottom: 1px dotted #ddd;
-        color: @subHoverColor;
+        color: $subHoverColor;
       }
     }
   }
@@ -81,11 +81,11 @@
 
   .author {
     float: right;
-    color: @subColor;
+    color: $subColor;
     font-style: italic;
   }
 
-  @media @sizeSP {
+  @media #{$sizeSP} {
     width: auto;
     margin-top: 0;
 

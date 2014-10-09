@@ -10,7 +10,7 @@
     display: none;
   }
 
-  @media @sizeSP {
+  @media #{$sizeSP} {
     background: url(/img/bg_s.jpg) no-repeat center bottom fixed;
     background-size: cover;
   }
@@ -55,7 +55,7 @@
     }
   }
 
-  @media @sizeSP {
+  @media #{$sizeSP} {
     background: url(/img/bg_s.jpg) no-repeat center bottom;
     background-size: cover;
 
@@ -88,6 +88,6 @@
 
   .background {
     opacity: 1 !important;
-    aniamtion: none !important;
+    animation: none !important;
   }
 }

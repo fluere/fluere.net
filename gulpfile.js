@@ -4,25 +4,25 @@
  * Plugins
  */
 var gulp = require('gulp')
+  , $ = require('gulp-load-plugins')()
   , path = require('path')
-  , rename = require('gulp-rename')
-  , concat = require('gulp-concat')
-  , uglify = require('gulp-uglify')
-  , jshint = require('gulp-jshint')
-  , stylish = require('jshint-stylish')
-  , less = require('gulp-less')
-  , prefix = require('gulp-autoprefixer')
-  , csslint = require('gulp-csslint')
-  , htmlhint = require('gulp-htmlhint')
-  , livereload = require('gulp-livereload')
-  , plumber = require('gulp-plumber')
-  , lr = require('tiny-lr')
-  , server = lr();
+  , server = require('tiny-lr')()
+  , stylish = require('jshint-stylish');
 
 /**
  * Paths
  */
 var paths = {
+  htmlhint: [
+    'htdocs/_sample/**/*.html'
+  ],
+  styles: [
+    'htdocs/**/*.scss'
+  ],
+  csslint: [
+    'htdocs/**/*.css',
+    '!htdocs/**/vendor/**/*.css'
+  ],
   scripts: [
     'htdocs/js/_util.js',
     'htdocs/js/_common.js',
@@ -34,16 +34,9 @@ var paths = {
     '!htdocs/js/all.min.js',
     '!htdocs/js/vendor/**/*.js'
   ],
-  styles: [
-    'htdocs/**/*.less',
-    '!htdocs/**/_*.less'
-  ],
-  htmlhint: [
-    'htdocs/_sample/**/*.html'
-  ],
   watch: {
     styles: [
-      'htdocs/**/*.less'
+      'htdocs/**/*.scss'
     ]
   }
 };
@@ -59,13 +52,60 @@ var options = {
     }
   },
   styles: {
-    less: {
-      paths: ['htdocs/_less/utility/'],
-      compress: true
+    rubySass: {
+      loadPath: 'htdocs/_sass/',
+      style: 'expanded',
+      'sourcemap=none': true
     },
-    prefix: ['> 1%', 'last 2 version', 'safari 5', 'ie 8', 'ie 9', 'ios 6', 'android 4']
+    pleeease: {
+      autoprefixer: {
+        'browsers': ['last 2 versions', 'ie >= 8', 'ios >= 6', 'android >= 2.3']
+      },
+      filters: false,
+      rem: ['10px'],
+      opacity: false,
+      minifier: true
+    }
   }
 };
+
+/**
+ * htmlhint
+ */
+gulp.task('htmlhint', function() {
+  gulp
+    .src(paths.htmlhint)
+    .pipe($.plumber())
+    .pipe($.htmlhint('.htmlhintrc'))
+    .pipe($.htmlhint.reporter())
+    .pipe($.livereload(server));
+});
+
+/**
+ * Compile sass and pleeease.
+ */
+gulp.task('styles', function() {
+  gulp
+    .src(paths.styles)
+    .pipe($.plumber())
+    .pipe($.rename(function(data) {
+      data.dirname = path.join(data.dirname, '..', 'css');
+      data.basename += '.min';
+    }))
+    .pipe($.rubySass(options.styles.rubySass))
+    .pipe($.pleeease(options.styles.pleeease))
+    .pipe(gulp.dest('htdocs/'))
+    .pipe($.livereload(server));
+});
+
+/**
+ * Compile sass, pleeease and csslint.
+ */
+gulp.task('csslint', function() {
+  gulp
+    .src(paths.csslint)
+    .pipe($.csslint('.csslintrc'));
+});
 
 /**
  * Concatenate and minify scripts.
@@ -73,11 +113,11 @@ var options = {
 gulp.task('scripts', function() {
   gulp
     .src(paths.scripts)
-    .pipe(plumber())
-    .pipe(concat('all.min.js'))
-    .pipe(uglify(options.scripts.uglify))
+    .pipe($.plumber())
+    .pipe($.concat('all.min.js'))
+    .pipe($.uglify(options.scripts.uglify))
     .pipe(gulp.dest('htdocs/js'))
-    .pipe(livereload(server));
+    .pipe($.livereload(server));
 });
 
 /**
@@ -86,50 +126,14 @@ gulp.task('scripts', function() {
 gulp.task('jshint', function() {
   gulp
     .src(paths.jshint)
-    .pipe(plumber())
-    .pipe(jshint('.jshintrc'))
-    .pipe(jshint.reporter(stylish))
-    .pipe(livereload(server));
+    .pipe($.plumber())
+    .pipe($.jshint('.jshintrc'))
+    .pipe($.jshint.reporter(stylish))
+    .pipe($.livereload(server));
 });
 
 /**
- * Compile less and csslint.
- */
-gulp.task('styles', function() {
-  gulp
-    .src(paths.styles)
-    .pipe(plumber())
-    .pipe(less(options.styles.less))
-    .pipe(prefix(options.styles.prefix))
-    .pipe(rename(function(data) {
-      data.dirname = path.join(data.dirname, '..', 'css');
-      data.basename += '.min';
-    }))
-    .pipe(gulp.dest('htdocs/'))
-    .pipe(csslint('.csslintrc'))
-    .pipe(csslint.reporter())
-    .pipe(livereload(server));
-});
-
-/**
- * htmlhint
- */
-gulp.task('htmlhint', function() {
-  gulp
-    .src(paths.htmlhint)
-    .pipe(plumber())
-    .pipe(htmlhint('.htmlhintrc'))
-    .pipe(htmlhint.reporter())
-    .pipe(livereload(server));
-});
-
-/**
- * Task dependencies.
- */
-gulp.task('all', ['scripts', 'jshint', 'styles', 'htmlhint']);
-
-/**
- * Live Reload.
+ * Live reload.
  */
 gulp.task('lr-server', function() {
   server.listen(35729, function(err) {
@@ -143,13 +147,19 @@ gulp.task('lr-server', function() {
  * Watch.
  */
 gulp.task('watch', ['lr-server'], function() {
+  gulp.watch(paths.htmlhint, ['htmlhint']);
+  gulp.watch(paths.watch.styles, ['styles']);
+  gulp.watch(paths.csslint, ['csslint']);
   gulp.watch(paths.scripts, ['scripts']);
   gulp.watch(paths.jshint, ['jshint']);
-  gulp.watch(paths.watch.styles, ['styles']);
-  gulp.watch(paths.htmlhint, ['htmlhint']);
 });
 
 /**
  * Default task.
  */
 gulp.task('default', ['watch']);
+
+/**
+ * Task dependencies.
+ */
+gulp.task('all', ['htmlhint', 'styles', 'csslint', 'scripts', 'jshint']);

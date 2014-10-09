@@ -19,33 +19,33 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  @media @sizeSP {
+  @media #{$sizeSP} {
     font-size: 7.5px;
   }
 }
 
 body {
   line-height: 2;
-  color: @baseColor;
+  color: $baseColor;
 }
 
 /* Link
    ========================================================================== */
 a {
-  color: @linkColor;
+  color: $linkColor;
   transition: color .2s;
 
   &:visited {
-    color: @linkVisitedColor;
+    color: $linkVisitedColor;
   }
 
   &:hover,
   &:active {
-    color: darken(@linkColor, 25%);
+    color: darken($linkColor, 25%);
   }
 
   &:visited:hover,
   &:visited:active {
-    color: darken(@linkVisitedColor, 25%);
+    color: darken($linkVisitedColor, 25%);
   }
 }

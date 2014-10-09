@@ -8,13 +8,13 @@
   font-family: 'Roboto Slab Light';
 
   a {
-    color: @subColor;
+    color: $subColor;
     font-size: 2rem;
     text-decoration: none;
     transition: color .2s;
 
     &:hover {
-      color: @subHoverColor;
+      color: $subHoverColor;
     }
   }
 
@@ -22,7 +22,7 @@
     margin-right: 5px;
   }
 
-  @media @sizeSP {
+  @media #{$sizeSP} {
     margin-top: 20px;
   }
 }
