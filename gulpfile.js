@@ -3,11 +3,11 @@
 /**
  * Plugins
  */
-var gulp = require('gulp')
-  , $ = require('gulp-load-plugins')()
-  , path = require('path')
-  , server = require('tiny-lr')()
-  , stylish = require('jshint-stylish');
+var gulp = require('gulp'),
+    $ = require('gulp-load-plugins')(),
+    path = require('path'),
+    server = require('tiny-lr')(),
+    stylish = require('jshint-stylish');
 
 /**
  * Paths
@@ -31,14 +31,13 @@ var paths = {
   jshint: [
     'gulpfile.js',
     'htdocs/**/*.js',
-    '!htdocs/js/all.min.js',
-    '!htdocs/js/vendor/**/*.js'
+    '!htdocs/**/*.min.js',
+    '!htdocs/**/vendor/**/*.js'
   ],
-  watch: {
-    styles: [
-      'htdocs/**/*.scss'
-    ]
-  }
+  reload: [
+    'htdocs/**/*.*',
+    '!htdocs/**/_*.*',
+  ]
 };
 
 /**
@@ -73,19 +72,19 @@ var options = {
  * htmlhint
  */
 gulp.task('htmlhint', function() {
-  gulp
+  return gulp
     .src(paths.htmlhint)
     .pipe($.plumber())
+    .pipe($.cached('htmlhint'))
     .pipe($.htmlhint('.htmlhintrc'))
-    .pipe($.htmlhint.reporter())
-    .pipe($.livereload(server));
+    .pipe($.htmlhint.reporter());
 });
 
 /**
  * Compile sass and pleeease.
  */
 gulp.task('styles', function() {
-  gulp
+  return gulp
     .src(paths.styles)
     .pipe($.plumber())
     .pipe($.rename(function(data) {
@@ -94,16 +93,16 @@ gulp.task('styles', function() {
     }))
     .pipe($.rubySass(options.styles.rubySass))
     .pipe($.pleeease(options.styles.pleeease))
-    .pipe(gulp.dest('htdocs/'))
-    .pipe($.livereload(server));
+    .pipe(gulp.dest('htdocs'));
 });
 
 /**
- * Compile sass, pleeease and csslint.
+ * csslint
  */
-gulp.task('csslint', function() {
-  gulp
+gulp.task('csslint', ['styles'], function() {
+  return gulp
     .src(paths.csslint)
+    .pipe($.cached('csslint'))
     .pipe($.csslint('.csslintrc'));
 });
 
@@ -111,24 +110,33 @@ gulp.task('csslint', function() {
  * Concatenate and minify scripts.
  */
 gulp.task('scripts', function() {
-  gulp
+  return gulp
     .src(paths.scripts)
     .pipe($.plumber())
     .pipe($.concat('all.min.js'))
     .pipe($.uglify(options.scripts.uglify))
-    .pipe(gulp.dest('htdocs/js'))
-    .pipe($.livereload(server));
+    .pipe(gulp.dest('htdocs/js'));
 });
 
 /**
  * jshint
  */
-gulp.task('jshint', function() {
-  gulp
+gulp.task('jshint', ['scripts'], function() {
+  return gulp
     .src(paths.jshint)
     .pipe($.plumber())
+    .pipe($.cached('jshint'))
     .pipe($.jshint('.jshintrc'))
-    .pipe($.jshint.reporter(stylish))
+    .pipe($.jshint.reporter(stylish));
+});
+
+/**
+ * Reload browser.
+ */
+gulp.task('reload', ['styles', 'scripts'], function() {
+  return gulp
+    .src(paths.reload)
+    .pipe($.cached('reload'))
     .pipe($.livereload(server));
 });
 
@@ -148,10 +156,11 @@ gulp.task('lr-server', function() {
  */
 gulp.task('watch', ['lr-server'], function() {
   gulp.watch(paths.htmlhint, ['htmlhint']);
-  gulp.watch(paths.watch.styles, ['styles']);
+  gulp.watch(paths.styles, ['styles']);
   gulp.watch(paths.csslint, ['csslint']);
   gulp.watch(paths.scripts, ['scripts']);
   gulp.watch(paths.jshint, ['jshint']);
+  gulp.watch(paths.reload, ['reload']);
 });
 
 /**
@@ -162,4 +171,4 @@ gulp.task('default', ['watch']);
 /**
  * Task dependencies.
  */
-gulp.task('all', ['htmlhint', 'styles', 'csslint', 'scripts', 'jshint']);
+gulp.task('all', ['htmlhint', 'styles', 'csslint', 'scripts', 'jshint', 'reload']);
