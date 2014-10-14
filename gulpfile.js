@@ -121,7 +121,7 @@ gulp.task('scripts', function() {
 /**
  * jshint
  */
-gulp.task('jshint', ['scripts'], function() {
+gulp.task('jshint', function() {
   return gulp
     .src(paths.jshint)
     .pipe($.plumber())
@@ -133,7 +133,7 @@ gulp.task('jshint', ['scripts'], function() {
 /**
  * Reload browser.
  */
-gulp.task('reload', ['styles', 'scripts'], function() {
+gulp.task('reload', function() {
   return gulp
     .src(paths.reload)
     .pipe($.cached('reload'))
