@@ -16,7 +16,8 @@
   /**
    * For state management.
    */
-  var isMobile = $html.hasClass('mobile');
+  var isMobile = $html.hasClass('mobile')
+    , initialized = false;
 
   /**
    * Initialize.
@@ -28,6 +29,7 @@
     setUpBackground();
     setUpLink('.page-header, .page-footer');
     pageLoadComplete();
+    initialized = true;
   };
 
   /**
@@ -44,7 +46,11 @@
   var pageLoadComplete = function() {
     /* Keep height */
     $('#main-content').css('minHeight', $window.height());
-    window.scrollTo(0, $header.outerHeight());
+
+    /* Skip header */
+    if (initialized) {
+      window.scrollTo(0, $header.outerHeight());
+    }
 
     /* Links */
     setUpLink('#main-content');
